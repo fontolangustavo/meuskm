@@ -13,6 +13,11 @@ export class HomeScreen extends Component {
             infos: [
             ]
         }
+        
+        this.didFocusListener = this.props.navigation.addListener(
+            'didFocus',
+            this.componentWillMount
+        );
     }
 
     componentWillMount = async () => {
