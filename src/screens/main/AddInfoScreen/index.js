@@ -22,7 +22,7 @@ export class AddInfoScreen extends Component {
       infos = JSON.parse(infos);
       let { ...registro } = this.state;
 
-      if (infos == null) {
+      if (!infos.length) {
         infos = [];
         registro.id = 1;
       }else{

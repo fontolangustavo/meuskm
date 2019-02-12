@@ -5,7 +5,12 @@ export default {
     },
     item: {
         flex: 1,
+        height: 100,
         flexDirection: 'row',
+        backgroundColor: '#E5E5E5',
+        borderRadius: 20,
+    },
+    itemSwip: {
         marginBottom: 15,
         backgroundColor: '#E5E5E5',
         borderRadius: 20,
@@ -14,10 +19,9 @@ export default {
         width: '10%',
         height: 100,
         alignItems: 'center',
-        // backgroundColor: 'red'
     },
     itemRight: {
-        width: '90%',
+        width: '80%',
         height: 100,
         justifyContent: 'center',
     },
@@ -28,5 +32,14 @@ export default {
         fontSize: 20,
         height: 22,
         color: 'white',
+    },
+    noRegisterContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    noRegisterText: {
+        color: '#B2B2B2',
+        fontSize: 16,
+        marginTop: 20,
     }
 }
