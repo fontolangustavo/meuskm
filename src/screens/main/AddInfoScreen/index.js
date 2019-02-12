@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, TextInput, View, TouchableHighlight, AsyncStorage } from 'react-native';
 
+import { TextInputMask } from 'react-native-masked-text';
 import styles from './styles';
 
 export class AddInfoScreen extends Component {
@@ -10,7 +11,8 @@ export class AddInfoScreen extends Component {
       id: '',
       name: '',
       price: '',
-      km: ''
+      km: '',
+      date: ''
     };
   }
 
@@ -22,16 +24,16 @@ export class AddInfoScreen extends Component {
       infos = JSON.parse(infos);
       let { ...registro } = this.state;
 
-      if (!infos.length) {
+      registro.date = new Date().toLocaleDateString();
+
+      if (!infos || infos.length == 0) {
         infos = [];
         registro.id = 1;
-      }else{
+      } else {
         registro.id = infos[infos.length - 1].id + 1;
       }
 
       infos.push(registro);
-
-      console.log(infos);
 
       await AsyncStorage.setItem('infos', JSON.stringify(infos));
       goBack();
@@ -56,23 +58,26 @@ export class AddInfoScreen extends Component {
         <Text style={styles.placeholder}>
           Preço
         </Text>
-        <TextInput
-          style={styles.input}
+        <TextInputMask
           onChangeText={(text) => this.setState({ price: text })}
           value={this.state.price}
+          type={'money'}
+          style={styles.input}
         />
 
         <Text style={styles.placeholder}>
           Kilometragem
         </Text>
-        <TextInput
-          style={styles.input}
+        <TextInputMask
           onChangeText={(text) => this.setState({ km: text })}
           value={this.state.km}
+          type={'only-numbers'}
+          style={styles.input}
         />
+        
         <TouchableHighlight
           style={styles.button}
-          underlayColor='#F9F9F9'
+          underlayColor='#6FD119'
           onPress={this._registrar}>
           <Text style={styles.buttonText}>
             Adicionar

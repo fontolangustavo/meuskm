@@ -21,9 +21,17 @@ export default {
         alignItems: 'center',
     },
     itemRight: {
-        width: '80%',
+        flexDirection: 'row',
+        paddingTop: 10,
+        width: '90%',
         height: 100,
-        justifyContent: 'center',
+    },
+    itemRightInfo: {
+        width: '50%'
+    },
+    itemRightData: {
+        width: '50%',
+        flexDirection: 'row'
     },
     itemContent: {
         marginBottom: 5

@@ -3,6 +3,7 @@ import { Text, View, AsyncStorage } from 'react-native'
 
 import { FlatList } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-elements'
+import { TextMask } from 'react-native-masked-text';
 import ActionButton from 'react-native-action-button';
 import Swipeout from 'react-native-swipeout';
 
@@ -25,8 +26,12 @@ export class HomeScreen extends Component {
     componentWillMount = async () => {
         try {
             let infos = await AsyncStorage.getItem('infos');
-            infos = JSON.parse(infos);
-            console.log(infos);
+            if (infos) {
+                infos = JSON.parse(infos);
+            } else {
+                infos = [];
+            }
+
             this.setState({ infos });
 
         } catch (e) {
@@ -40,7 +45,6 @@ export class HomeScreen extends Component {
     }
 
     _apagarRegistro = async (index) => {
-        alert(index);
         let { infos } = this.state;
         infos.splice(index, 1);
         this.setState({ infos });
@@ -70,15 +74,29 @@ export class HomeScreen extends Component {
                         </View>
                     </View>
                     <View style={styles.itemRight}>
-                        <Text style={styles.itemContent}>
-                            Tipo: {item.name}
-                        </Text>
-                        <Text style={styles.itemContent}>
-                            Custo: R$ {item.price}
-                        </Text>
-                        <Text style={styles.itemContent}>
-                            Km: {item.km}
-                        </Text>
+                        <View style={styles.itemRightInfo}>
+                            <Text style={styles.itemContent}>
+                                Tipo: {item.name}
+                            </Text>
+                            <Text style={styles.itemContent}>
+                                Custo: {item.price}
+                            </Text>
+                            <Text style={styles.itemContent}>
+                                Km: {item.km}
+                            </Text>
+                        </View>
+                        <View style={styles.itemRightData}>
+                            <Text style={styles.itemContent}>
+                                Data:
+                            </Text>
+                            <TextMask
+                                style={{ marginLeft: 5 }}
+                                value={item.date}
+                                type={'datetime'}
+                                options={{
+                                    format: 'DD/MM/YYYY'
+                                }} />
+                        </View>
                     </View>
 
                 </View>
@@ -103,7 +121,7 @@ export class HomeScreen extends Component {
                     </View>
                 }
                 <ActionButton buttonColor="rgba(231,76,60,1)">
-                    <ActionButton.Item buttonColor='#9b59b6' title="Novo registro" onPress={this._novoRegistro}>
+                    <ActionButton.Item buttonColor='#6FD119' title="Novo registro" onPress={this._novoRegistro}>
                         <Icon name="create" style={styles.actionButtonIcon} />
                     </ActionButton.Item>
                 </ActionButton>
