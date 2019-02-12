@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
-import { Icon, Divider } from 'react-native-elements'
+import { Text, View, AsyncStorage } from 'react-native'
+import { Icon } from 'react-native-elements'
 import ActionButton from 'react-native-action-button';
 
 import styles from './styles';
@@ -11,25 +11,20 @@ export class HomeScreen extends Component {
         super(props);
         this.state = {
             infos: [
-                {
-                    id: '01',
-                    name: 'Gasolina',
-                    price: 40,
-                    km: 22033411
-                },
-                {
-                    id: '03',
-                    name: 'Freios',
-                    price: 195.90,
-                    km: 22067411
-                },
-                {
-                    id: '02',
-                    name: 'Gasolina',
-                    price: 100,
-                    km: 22093411
-                }
             ]
+        }
+    }
+
+    componentWillMount = async () => {
+        try {
+            let infos = await AsyncStorage.getItem('infos');
+            infos = JSON.parse(infos);
+            console.log(infos);
+            this.setState({ infos });
+
+            // await AsyncStorage.clear();
+        } catch (e) {
+            console.log(e);
         }
     }
 
@@ -38,7 +33,7 @@ export class HomeScreen extends Component {
         navigate('AddInfo');
     }
 
-    _keyExtractor = (item) => item.id;
+    _keyExtractor = (item) => item.id.toString();
 
     _renderItem = ({ item }) => {
         return (
